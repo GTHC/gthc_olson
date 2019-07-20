@@ -1,23 +1,23 @@
 lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "gthc_olson/version"
+require "gthc/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "gthc_olson"
-  spec.version       = GthcOlson::VERSION
-  spec.authors       = ["Aman Ibrahim"]
+  spec.name          = "gthc"
+  spec.version       = Gthc::VERSION
+  spec.authors       = ["Aman Ibrahim", "Mike Olson"]
   spec.email         = ["amanmibra@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{GTHC Ruby Gem}
+  spec.description   = %q{Ruby Gem for any external GTHC tools. At the moment, that is only the Olson Tenting Algorithm}
+  spec.homepage      = "www.gthc.io"
   spec.license       = "MIT"
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+  # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/GTHC/gthc"
+  # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

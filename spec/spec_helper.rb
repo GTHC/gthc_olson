@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "gthc_olson"
+require "gthc"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

@@ -1,6 +1,6 @@
-require "gthc_olson/version"
+require "gthc/version"
 
-module GthcOlson
+module Gthc
   class Error < StandardError; end
   # Your code goes here...
 end

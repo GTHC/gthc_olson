@@ -1,6 +1,6 @@
-RSpec.describe GthcOlson do
+RSpec.describe Gthc do
   it "has a version number" do
-    expect(GthcOlson::VERSION).not_to be nil
+    expect(Gthc::VERSION).not_to be nil
   end
 
   it "does something useful" do
