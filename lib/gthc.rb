@@ -1,6 +1,6 @@
 require "gthc/version"
 
-module Gthc
+module GTHC
   class Error < StandardError; end
   # Your code goes here...
 end

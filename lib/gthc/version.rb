@@ -1,3 +1,3 @@
-module Gthc
+module GTHC
   VERSION = "0.0.1"
 end

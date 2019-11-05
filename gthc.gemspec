@@ -4,7 +4,7 @@ require "gthc/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "gthc"
-  spec.version       = Gthc::VERSION
+  spec.version       = GTHC::VERSION
   spec.authors       = ["Aman Ibrahim", "Mike Olson"]
   spec.email         = ["amanmibra@gmail.com"]
 
