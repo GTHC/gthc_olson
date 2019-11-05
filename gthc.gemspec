@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{GTHC Ruby Gem}
   spec.description   = %q{Ruby Gem for any external GTHC tools. At the moment, that is only the Olson Tenting Algorithm}
-  spec.homepage      = "www.gthc.io"
+  spec.homepage      = "https://www.gthc.io/"
   spec.license       = "MIT"
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"

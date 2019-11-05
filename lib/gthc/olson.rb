@@ -1,14 +1,12 @@
-require "olson/algorithm"
+require "./olson/algorithm"
 
 class GTHC::Olson
-  include Algorithm
-  # Main Driver
+  extend Algorithm
+
   def self.driver(peopleList, scheduleGrid)
-
     # Algorithm
-    updatedPeopleList, updatedScheduleGrid = Algorithm.schedule(peopleList, scheduleGrid)
-
+    updatedPeopleList, updatedScheduleGrid = schedule(peopleList, scheduleGrid)
     return updatedPeopleList, updatedScheduleGrid
-
   end
+
 end
