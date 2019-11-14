@@ -2,7 +2,7 @@ require "gthc/olson/algorithm"
 
 module GTHC
   module Olson
-    include Algorithm
+    extend Algorithm
 
     def self.driver(peopleList, scheduleGrid)
       # Algorithm

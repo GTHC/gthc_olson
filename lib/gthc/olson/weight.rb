@@ -1,10 +1,10 @@
-# require "./helpers"
+require "gthc/olson/helpers"
 
 module Weight
   include Helpers
 
   # Weight Reset - set all weights to 1.
-  def weightReset(slots)
+  def self.weightReset(slots)
     slots.each do | currentSlot |
       currentSlot.weight = 1;
     end
@@ -12,7 +12,7 @@ module Weight
   end
 
   # Weight Balance - prioritize people with fewer scheduled shifts
-  def weightBalance(people, slots)
+  def self.weightBalance(people, slots)
 
     slots.each do | currentSlot |
 
@@ -49,7 +49,7 @@ module Weight
     return people, slots
   end
 
-  def gridLimits(row, col, rowLength, colLength)
+  def self.gridLimits(row, col, rowLength, colLength)
     return row - 1 < 0,
            col - 1 < 0,
            row + 1 > rowLength - 1,
@@ -57,7 +57,7 @@ module Weight
   end
 
   # Weight Contiguous - prioritize people to stay in the tent more time at once.
-  def weightContiguous(people, slots, scheduleGrid, graveyard)
+  def self.weightContiguous(people, slots, scheduleGrid, graveyard)
 
     i = 0
     while i < slots.length
@@ -162,7 +162,7 @@ module Weight
   end
 
   # Weight Tough Time - prioritize time slots with few people available. */
-  def weightToughTime(people, slots, length)
+  def self.weightToughTime(people, slots, length)
 
     # Set up counterArray (Rows that are filled).
     counterArray = Array.new(length+1, 0)
@@ -187,7 +187,7 @@ module Weight
   end
 
   # Update people, spreadsheet, and remove slots.
-  def weightPick(people, slots, results, graveyard, scheduleGrid)
+  def self.weightPick(people, slots, results, graveyard, scheduleGrid)
 
     # Remove winner from list.
     winner = slots.shift;
