@@ -1,4 +1,3 @@
-require "gthc/olson"
 require "gthc/olson/helpers"
 require "gthc/olson/weight"
 
