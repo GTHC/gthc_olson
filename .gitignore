@@ -12,3 +12,5 @@
 
 # generated file from building gem
 *.gem
+
+*dconf*
