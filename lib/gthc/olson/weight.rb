@@ -57,7 +57,7 @@ module Weight
   end
 
   # Weight Contiguous - prioritize people to stay in the tent more time at once.
-  def self.weightContiguous(people, slots, scheduleGrid, graveyard)
+  def self.weightContiguous(slots, scheduleGrid, graveyard)
 
     i = 0
     while i < slots.length
@@ -65,7 +65,6 @@ module Weight
       # Establish Variables
       currentRow = slots[i].row
       currentCol = slots[i].col
-      night = slots[i].isNight
 
       aboveRow = currentRow-1
       belowRow = currentRow+1
@@ -158,14 +157,14 @@ module Weight
 
     end
 
-    return people, slots, scheduleGrid, graveyard
+    return slots, scheduleGrid, graveyard
   end
 
   # Weight Tough Time - prioritize time slots with few people available. */
-  def self.weightToughTime(people, slots, length)
+  def self.weightToughTime(slots, scheduleLength)
 
     # Set up counterArray (Rows that are filled).
-    counterArray = Array.new(length+1, 0)
+    counterArray = Array.new(scheduleLength + 1, 0)
 
     # Fill counterArray.
     slots.each do | currentSlot |
@@ -183,15 +182,14 @@ module Weight
       currentSlot.weight = currentSlot.weight*(12/numFreePeople)*peopleNeeded
     end
 
-    return people, slots
+    return slots
   end
 
   # Update people, spreadsheet, and remove slots.
-  def self.weightPick(people, slots, results, graveyard, scheduleGrid)
+  def self.weightPick(people, slots, graveyard, scheduleGrid)
 
     # Remove winner from list.
     winner = slots.shift;
-    results.push(winner);
 
     # Update person information.
     currentPersonID = winner.personID;
@@ -248,6 +246,6 @@ module Weight
       slot = tempSlot
     end
 
-    return people, slots, results, graveyard, scheduleGrid
+    return people, slots, graveyard, scheduleGrid
   end
 end

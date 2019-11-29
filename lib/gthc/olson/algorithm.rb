@@ -8,18 +8,13 @@ module Algorithm
 
   # Central document for creating schedule.
   def schedule(people, scheduleGrid)
-
-    # Create results and scheduled rows "graveyard"
-    results = Array.new
+    scheduleLength = scheduleGrid[0].length
 
     # Remove all availability slots that are already filled in the schedule.
-    slots, graveyard, people, scheduleGrid = removeFilledSlots(people, scheduleGrid)
-
-    count = 0
+    slots, graveyard, people = removeFilledSlots(people, scheduleGrid)
 
     # Remove all availability slots that are already filled in the schedule.
     while slots.length > 0
-      count += 1
 
       # Weight Reset - set all weights to 1.
       slots = Weight.weightReset(slots)
@@ -28,16 +23,16 @@ module Algorithm
       people, slots = Weight.weightBalance(people, slots)
 
       # Weight Contiguous - prioritize people to stay in the tent more time at once.
-      people, slots, scheduleGrid, graveyard = Weight.weightContiguous(people, slots, scheduleGrid, graveyard)
+      slots, scheduleGrid, graveyard = Weight.weightContiguous(slots, scheduleGrid, graveyard)
 
       # Weight Tough Time - prioritize time slots with few people available.
-      people, slots = Weight.weightToughTime(people, slots, scheduleGrid[0].length)
+      slots = Weight.weightToughTime(slots, scheduleLength)
 
       # Sort by Weights
       slots.sort_by { |a| -a.weight }
 
       # Update people, spreadsheet, and remove slots.
-      people, slots, results, graveyard, scheduleGrid = Weight.weightPick(people, slots, results, graveyard, scheduleGrid)
+      people, slots, graveyard, scheduleGrid = Weight.weightPick(people, slots, graveyard, scheduleGrid)
 
     end
 
@@ -109,7 +104,7 @@ module Algorithm
 
     end
 
-    return slots, graveyard, people, scheduleGrid
+    return slots, graveyard, people
 
   end
 end
