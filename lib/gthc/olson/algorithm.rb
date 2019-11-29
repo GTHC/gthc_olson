@@ -77,9 +77,9 @@ module Algorithm
       while counter < scheduleGrid[i].length
 
         # Determine how many people are needed.
-        nightBoolean = currentPerson[counter].isNight
+        isNight = currentPerson[counter].isNight
         phase = currentPerson[counter].phase
-        peopleNeeded = Helpers.calculatePeopleNeeded(nightBoolean, phase)
+        peopleNeeded = Helpers.calculatePeopleNeeded(isNight, phase)
         numPeople = counterArray[counter]
 
         # Only add in slot if necessary.
@@ -93,13 +93,13 @@ module Algorithm
         end
 
         # Update person freedom
-        if numPeople >= peopleNeeded  && currentPerson[counter].status == "Available"
-          if isNight
-            people[i].nightFree -= 1
-          else
-            people[i].dayFree -= 1
-          end
-        end
+        # if numPeople >= peopleNeeded  && currentPerson[counter].status == "Available"
+        #   if isNight
+        #     people[i].nightFree -= 1
+        #   else
+        #     people[i].dayFree -= 1
+        #   end
+        # end
 
         counter = counter + 1
 
