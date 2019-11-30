@@ -36,7 +36,7 @@ module Algorithm
 
     end
 
-    return people, scheduleGrid
+    return processData(people, scheduleGrid)
 
   end
 
@@ -106,5 +106,35 @@ module Algorithm
 
     return slots, graveyard, people
 
+  end
+
+  def processData(people, scheduleGrid)
+    # compress data from 2d grid with a single-deminsion of
+    # all of the scheduled slots
+    combinedGrid = []
+
+    # iterating through every unique slot, and
+    # checking for any people that are scheduled on that slot as well
+    for slotIndex in 0...scheduleGrid[0].length
+      slotData = scheduleGrid[0][slotIndex].to_hash
+      slot = {
+        "startDate": slotData["startDate"],
+        "endDate": slotData["endDate"],
+        "phase": slotData["phase"],
+      }
+      slot["ids"] = Array.new
+
+      # checking every person at that slot for status
+      for personIndex in 0...people.length
+        person = people[personIndex]
+        if scheduleGrid[personIndex][slotIndex].status == "Scheduled"
+          slot["ids"].push(person.id)
+        end
+      end
+
+      combinedGrid.push(slot)
+    end
+
+    combinedGrid
   end
 end
