@@ -123,17 +123,24 @@ module Algorithm
         "isNight": slotData["isNight"],
         "phase": slotData["phase"],
       }
-      slot["ids"] = Array.new
+      slot[:ids] = Array.new
 
       # checking every person at that slot for status
       for personIndex in 0...people.length
         person = people[personIndex]
         if scheduleGrid[personIndex][slotIndex].status == "Scheduled"
-          slot["ids"].push(person.id)
+          slot[:ids].push(person.id)
         end
       end
 
       combinedGrid.push(slot)
+    end
+
+    # prints amount of people needed in a slot based on time and phase
+    combinedGrid.each do | slot |
+      peopleNeeded = Helpers.calculatePeopleNeeded slot[:isNight], slot[:phase]
+      peopleLeft = peopleNeeded - slot[:ids].length
+      slot["peopleLeft"] = peopleLeft
     end
 
     combinedGrid

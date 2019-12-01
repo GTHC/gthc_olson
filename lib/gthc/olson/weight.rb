@@ -49,11 +49,9 @@ module Weight
     return people, slots
   end
 
-  def self.gridLimits(row, col, rowLength, colLength)
+  def self.gridLimits(row, rowLength)
     return row - 1 < 0,
-           col - 1 < 0,
-           row + 1 > rowLength - 1,
-           col + 1 > colLength - 1
+           row + 1 > rowLength - 1
   end
 
   # Weight Contiguous - prioritize people to stay in the tent more time at once.
@@ -68,40 +66,27 @@ module Weight
 
       aboveRow = currentRow-1
       belowRow = currentRow+1
-      aboveCol = currentCol-1
-      belowCol = currentCol+1
+
+      # grab all slots under the same col as the inspected slot in order
+      # to get the slots above and below
+      allSlots = scheduleGrid[currentCol]
+      slotsLength = allSlots.length
 
       # find what to skip
-      skipAboveRow,
-      skipAboveCol,
-      skipBelowRow,
-      skipBelowCol = gridLimits(
-        currentRow,
-        currentCol,
-        scheduleGrid[currentCol].length,
-        scheduleGrid.length
-      )
+      skipAboveRow, skipBelowRow = gridLimits(currentRow, slotsLength)
 
       currentIsNight = slots[i].isNight
-      aboveIsNight = !skipAboveCol && !skipAboveRow && scheduleGrid[aboveCol][aboveRow].isNight
-      belowIsNight = !skipBelowCol && !skipBelowRow && scheduleGrid[belowCol][belowRow].isNight
+      aboveIsNight = !skipAboveRow && allSlots[aboveRow].isNight
+      belowIsNight = !skipBelowRow && allSlots[belowRow].isNight
 
-      aboveTent = !skipAboveCol && !skipAboveRow && scheduleGrid[aboveCol][aboveRow].status == "Scheduled"
-      belowTent = !skipBelowCol && !skipBelowRow && scheduleGrid[belowCol][belowRow].status == "Scheduled"
-      aboveFree = !skipAboveCol && !skipAboveRow && scheduleGrid[aboveCol][aboveRow].status == "Available"
-      belowFree = !skipBelowCol && !skipBelowRow && scheduleGrid[belowCol][belowRow].status == "Available"
+      aboveTent = !skipAboveRow && allSlots[aboveRow].status == "Scheduled"
+      belowTent = !skipBelowRow && allSlots[belowRow].status == "Scheduled"
+      aboveSome = !skipAboveRow && allSlots[aboveRow].status == "Somewhat"
+      belowSome = !skipBelowRow && allSlots[belowRow].status == "Somewhat"
+      aboveFree = !skipAboveRow && allSlots[aboveRow].status == "Available"
+      belowFree = !skipBelowRow && allSlots[belowRow].status == "Available"
 
       multi = 1
-
-      # Determine tent, available, and not available for above
-      if graveyard[aboveRow] == 1 && aboveFree
-        aboveFree = false
-      end
-
-      # Determine tent, available, and not available for below
-      if graveyard[belowRow] == 1 && belowFree
-        belowFree = false
-      end
 
       # Both are scheduled.
       if aboveTent && belowTent
@@ -109,7 +94,7 @@ module Weight
       end
 
       # Both are not free
-      if !belowTent && !belowFree && !aboveTent && !aboveFree
+      if !belowTent && !belowFree && !aboveSome && !belowSome && !aboveTent && !aboveFree
         if slots[i].weight > 0
           multi = -1
         end
@@ -152,7 +137,12 @@ module Weight
 
       # Night Multi
       if aboveIsNight || belowIsNight || currentIsNight
-        multi = multi*1.25
+        multi *= 1.25
+      end
+
+      # Occurance of Somewhat Available
+      if aboveSome || belowSome
+        multi *= 0.5
       end
 
       slots[i].weight = slots[i].weight*multi
