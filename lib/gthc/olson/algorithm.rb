@@ -120,6 +120,7 @@ module Algorithm
       slot = {
         "startDate": slotData["startDate"],
         "endDate": slotData["endDate"],
+        "isNight": slotData["isNight"],
         "phase": slotData["phase"],
       }
       slot["ids"] = Array.new

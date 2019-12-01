@@ -6,8 +6,7 @@ module GTHC
 
     def self.driver(peopleList, scheduleGrid)
       # Algorithm
-      updatedPeopleList, updatedScheduleGrid = schedule(peopleList, scheduleGrid)
-      return updatedPeopleList, updatedScheduleGrid
+      schedule(peopleList, scheduleGrid)  
     end
   end
 end

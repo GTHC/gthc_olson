@@ -72,12 +72,15 @@ module Weight
       belowCol = currentCol+1
 
       # find what to skip
-      skipAboveRow, skipAboveCol, skipBelowRow, skipBelowCol = gridLimits(
-                                                                          currentRow,
-                                                                          currentCol,
-                                                                          scheduleGrid[belowCol].length,
-                                                                          scheduleGrid.length
-                                                                        )
+      skipAboveRow,
+      skipAboveCol,
+      skipBelowRow,
+      skipBelowCol = gridLimits(
+        currentRow,
+        currentCol,
+        scheduleGrid[currentCol].length,
+        scheduleGrid.length
+      )
 
       currentIsNight = slots[i].isNight
       aboveIsNight = !skipAboveCol && !skipAboveRow && scheduleGrid[aboveCol][aboveRow].isNight
@@ -204,7 +207,6 @@ module Weight
     end
 
     # Establish Variables
-    currentPhase = winner.phase
     currentRow = winner.row
     currentCol = winner.col
     tentCounter = 0
@@ -228,22 +230,15 @@ module Weight
     if tentCounter >= peopleNeeded
       graveyard[currentRow] = 1
       j = 0
-      tempSlot = slots.dup # deepcopy slots
+      tempSlots = []
       while j < slots.length
         tempRow = slots[j].row
-        tempID = slots[j].personID
-        tempNight = slots[j].isNight
-        if tempRow == currentRow
-          if tempNight
-            people[tempID].nightFree -= 1
-          else
-            people[tempID].dayFree -= 1
-          end
-          tempSlot.delete(j);
+        if tempRow != currentRow
+          tempSlots.push slots[j]
         end
         j += 1
       end
-      slot = tempSlot
+      slots = tempSlots
     end
 
     return people, slots, graveyard, scheduleGrid
