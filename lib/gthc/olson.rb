@@ -11,12 +11,12 @@ module GTHC
       schedule(peopleList, scheduleGrid)  
     end
 
-    def self.Person(id, name, dayFree, nightFree, dayScheduled, nightScheduled)
-      Person.new(id, name, dayFree, nightFree, dayScheduled, nightScheduled)
+    def self.Person
+      Person
     end
 
-    def self.Slot(personID, startDate, endDate, phase, isNight, status, row, col, weight=1)
-      Slot.new(personID, startDate, endDate, phase, isNight, status, row, col, weight)
+    def self.Slot
+      Slot
     end
   end
 end
