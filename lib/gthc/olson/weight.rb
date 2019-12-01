@@ -59,7 +59,6 @@ module Weight
 
     i = 0
     while i < slots.length
-      # puts i
       # Establish Variables
       currentRow = slots[i].row
       currentCol = slots[i].col
