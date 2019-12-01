@@ -1,11 +1,10 @@
 require "gthc/olson/algorithm"
 require "gthc/olson/person"
-# require "gthc/olson/slot"
+require "gthc/olson/slot"
 
 module GTHC
   module Olson
     extend Algorithm
-    include Person
 
     def self.driver(peopleList, scheduleGrid)
       # Algorithm
@@ -16,8 +15,8 @@ module GTHC
       Person.new(id, name, dayFree, nightFree, dayScheduled, nightScheduled)
     end
 
-    # def self.Slot(personID, startDate, endDate, phase, isNight, status, row, col, weight=1)
-    #   Slot.new(personID, startDate, endDate, phase, isNight, status, row, col, weight)
-    # end
+    def self.Slot(personID, startDate, endDate, phase, isNight, status, row, col, weight=1)
+      Slot.new(personID, startDate, endDate, phase, isNight, status, row, col, weight)
+    end
   end
 end
