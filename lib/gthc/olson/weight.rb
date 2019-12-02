@@ -17,7 +17,7 @@ module Weight
     slots.each do | currentSlot |
 
       # Establish variables.
-      currentPersonID = currentSlot.personID
+      currentPersonID = currentSlot.col
       dayScheduled = people[currentPersonID].dayScheduled
       nightScheduled = people[currentPersonID].nightScheduled
       night = currentSlot.isNight;
@@ -184,7 +184,7 @@ module Weight
     winner = slots.shift;
 
     # Update person information.
-    currentPersonID = winner.personID;
+    currentPersonID = winner.col;
     currentTime = winner.isNight;
 
     if currentTime
