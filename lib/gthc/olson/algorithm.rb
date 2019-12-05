@@ -140,9 +140,33 @@ module Algorithm
     combinedGrid.each do | slot |
       peopleNeeded = Helpers.calculatePeopleNeeded slot[:isNight], slot[:phase]
       peopleLeft = peopleNeeded - slot[:ids].length
-      slot["peopleLeft"] = peopleLeft
+      slot[:peopleLeft] = peopleLeft
     end
 
-    combinedGrid
+    simplifyGrid(combinedGrid)
   end
+
+  #TODO: Write function to simplify the grid by combining any possible shifts
+  # def simplifyGrid(combinedGrid)
+  #   simplifiedGrid = []
+  #   currentSlot = {}
+  #   previousDate = ""
+  #   combinedGrid.each_with_index do |slot, index|
+  #     if currentSlot[:startDate]
+  #       if index == combinedGrid.length - 1
+  #         currentSlot[:endDate] = slot[:endDate]
+  #         if !currentSlot[:isNight]
+  #           currentSlot[:isNight]
+  #         end
+  #       else
+  #
+  #       end
+  #     elsif index == combinedGrid.length - 1
+  #       simplifyGrid.push slot
+  #     else
+  #       currentSlot[:startDate] = slot[:startDate]
+  #       previousDate = slot[:endDate]
+  #     end
+  #   end
+  # end
 end
