@@ -143,30 +143,36 @@ module Algorithm
       slot[:peopleLeft] = peopleLeft
     end
 
-    simplifyGrid(combinedGrid)
+    return combinedGrid, simplifyGrid(combinedGrid)
   end
 
-  #TODO: Write function to simplify the grid by combining any possible shifts
-  # def simplifyGrid(combinedGrid)
-  #   simplifiedGrid = []
-  #   currentSlot = {}
-  #   previousDate = ""
-  #   combinedGrid.each_with_index do |slot, index|
-  #     if currentSlot[:startDate]
-  #       if index == combinedGrid.length - 1
-  #         currentSlot[:endDate] = slot[:endDate]
-  #         if !currentSlot[:isNight]
-  #           currentSlot[:isNight]
-  #         end
-  #       else
-  #
-  #       end
-  #     elsif index == combinedGrid.length - 1
-  #       simplifyGrid.push slot
-  #     else
-  #       currentSlot[:startDate] = slot[:startDate]
-  #       previousDate = slot[:endDate]
-  #     end
-  #   end
-  # end
+  def simplifyGrid(combinedGrid)
+    simplifiedGrid = []
+    currentSlot = {}
+    building = false
+    combinedGrid.each_with_index do |slot, index|
+      if building
+        #if a slot has already started building
+        if isConnectedSlot(currentSlot, slot)
+          currentSlot[:endDate] = slot[:endDate]
+          #if any of the slots are night, all are marked as night
+          currentSlot[:isNight] = true if slot[:isNight]
+        else
+          simplifiedGrid.push currentSlot
+          currentSlot = slot
+        end
+      else
+        # if are starting a new slot
+        currentSlot = slot
+        building = true
+      end
+      simplifiedGrid.push currentSlot if index == combinedGrid.length - 1
+    end
+    simplifiedGrid
+  end
+
+  def isConnectedSlot(slot1, slot2)
+    slot1[:ids] == slot2[:ids] and slot1[:phase] == slot2[:phase]
+  end
+
 end
