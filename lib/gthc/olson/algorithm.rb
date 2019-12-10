@@ -77,8 +77,9 @@ module Algorithm
         peopleNeeded = Helpers.calculatePeopleNeeded(isNight, phase)
         numPeople = counterArray[counter]
 
+        addToSlot = currentPerson[counter].status == "Available" || currentPerson[counter].status == "Somewhat"
         # Only add in slot if necessary.
-        if numPeople < peopleNeeded && currentPerson[counter].status == "Available"
+        if numPeople < peopleNeeded && addToSlot
           slots.push(currentPerson[counter])
         end
 
