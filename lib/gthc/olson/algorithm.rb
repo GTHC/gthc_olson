@@ -23,13 +23,14 @@ module Algorithm
       people, slots = Weight.weightBalance(people, slots)
 
       # Weight Contiguous - prioritize people to stay in the tent more time at once.
-      slots, scheduleGrid, graveyard = Weight.weightContiguous(slots, scheduleGrid, graveyard)
+      slots, scheduleGrid = Weight.weightContiguous(slots, scheduleGrid)
 
       # Weight Tough Time - prioritize time slots with few people available.
       slots = Weight.weightToughTime(slots, scheduleLength)
 
       # Sort by Weights
-      slots.sort_by { |a| -a.weight }
+      slots.sort! { |a, b|  b.weight <=> a.weight }
+      # pp slots
 
       # Update people, spreadsheet, and remove slots.
       people, slots, graveyard, scheduleGrid = Weight.weightPick(people, slots, graveyard, scheduleGrid)

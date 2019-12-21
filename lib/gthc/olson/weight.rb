@@ -22,20 +22,16 @@ module Weight
       nightScheduled = people[currentPersonID].nightScheduled
       night = currentSlot.isNight;
 
-      nightMulti = 0;
-      dayMulti = 0;
+      nightMulti = 1;
+      dayMulti = 1;
 
       # Set multipliers.
       if nightScheduled != 0
-        nightMulti = 1.0 / nightScheduled
-      else
-        nightMulti = 1.5
+        nightMulti = 1.0 / (nightScheduled + 1)
       end
 
       if dayScheduled != 0
-        dayMulti = (1.0/(dayScheduled+nightScheduled*4*2))
-      else
-        dayMulti = 1.5
+        dayMulti = 1.0 / (dayScheduled + 1)
       end
 
       #Adjust weights with multipliers.
@@ -55,7 +51,7 @@ module Weight
   end
 
   # Weight Contiguous - prioritize people to stay in the tent more time at once.
-  def self.weightContiguous(slots, scheduleGrid, graveyard)
+  def self.weightContiguous(slots, scheduleGrid)
 
     i = 0
     while i < slots.length
@@ -94,9 +90,7 @@ module Weight
 
       # Both are not free
       if !belowTent && !belowFree && !aboveSome && !belowSome && !aboveTent && !aboveFree
-        if slots[i].weight > 0
-          multi = -1
-        end
+        multi *= 0.25
       end
 
       # Above is scheduled, below is free.
@@ -140,7 +134,7 @@ module Weight
       end
 
       # Occurance of Somewhat Available
-      if aboveSome || belowSome
+      if slots[i].status == "Somewhat"
         multi *= 0.5
       end
 
@@ -149,7 +143,7 @@ module Weight
 
     end
 
-    return slots, scheduleGrid, graveyard
+    return slots, scheduleGrid
   end
 
   # Weight Tough Time - prioritize time slots with few people available. */
